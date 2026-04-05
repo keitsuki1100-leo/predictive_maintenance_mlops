@@ -1,0 +1,43 @@
+# GitHub Actions — MLOps Pipeline
+name: Predictive Maintenance MLOps Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  mlops-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install mlflow scikit-learn pandas numpy fastapi uvicorn dvc
+
+      - name: Generate sensor data
+        run: |
+          python src/generate_sensor_data.py
+
+      - name: Train model
+        run: |
+          python src/train_model.py
+
+      - name: Evaluate and register model
+        run: |
+          python src/evaluate_and_register.py
+
+      - name: Upload model artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: predictive-maintenance-model
+          path: mlruns/
