@@ -1,0 +1,14 @@
+model:
+  n_estimators: 100
+  max_depth: 5
+  class_weight: balanced
+  random_state: 42
+
+data:
+  test_size: 0.2
+  raw_path: data/raw/sensor_data.csv
+
+thresholds:
+  accuracy: 0.92
+  f1_score: 0.88
+  roc_auc: 0.95
