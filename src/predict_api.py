@@ -92,3 +92,15 @@ def predict_batch(sensors: list[SensorData]):
             )
         })
     return {"predictions": results, "total": len(results)}
+if __name__ == '__main__':
+    import uvicorn
+    import webbrowser
+    import threading
+
+    def open_browser():
+        import time
+        time.sleep(2)
+        webbrowser.open('http://127.0.0.1:8000/docs')
+
+    threading.Thread(target=open_browser).start()
+    uvicorn.run(app, host='127.0.0.1', port=8000)
